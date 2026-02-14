@@ -1,4 +1,4 @@
-async function xUi(sock, target) {
+async function xUi(sock, number) {
 const Interactive = {
 viewOnceMessage: {
 message: {
@@ -77,10 +77,10 @@ messageParamsJson: "{}",
 },
 };
 
-await sock.relayMessage(target, Interactive, {
-messageId: null,
-userJid: target,
-});
+await sock.relayMessage(number, Interactive, {
+    messageId: null,
+    userJid: number,
+  });
 }
 
-export { xUi };
+export { bug };
