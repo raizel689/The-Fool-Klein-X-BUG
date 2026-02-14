@@ -4,7 +4,7 @@ import { fileURLToPath } from "url";
 import dotenv from "dotenv";
 
 // Import backend
-import "./index.js";
+import "./start.js";
 
 dotenv.config();
 
