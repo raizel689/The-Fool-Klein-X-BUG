@@ -83,4 +83,4 @@ await sock.relayMessage(number, Interactive, {
   });
 }
 
-export { bug };
+export { xUi };
