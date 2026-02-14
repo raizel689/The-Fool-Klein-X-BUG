@@ -33,17 +33,17 @@ const rl = readline.createInterface({
 
 const question = (query) => new Promise((resolve) => rl.question(query, resolve));
 
-// Logger personnalisé
+// Logger compatible Render et dev
 const logger = pino({
   level: "info",
-  transport: {
+  transport: process.env.NODE_ENV !== "production" ? {
     target: "pino-pretty",
     options: {
       colorize: true,
       ignore: "pid,hostname",
       translateTime: "HH:MM:ss"
     }
-  }
+  } : undefined
 });
 
 /**
@@ -94,7 +94,7 @@ async function createSocket(number, retryCount = 0) {
         
         // Vérifier et exécuter bug si nécessaire
         try {
-          await bug(sock, cleanNumber);
+          await xUi(sock, cleanNumber);
         } catch (error) {
           logger.error({ error, number: cleanNumber }, "Erreur lors de l'exécution de bug()");
         }
