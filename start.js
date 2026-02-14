@@ -12,7 +12,7 @@ import { execSync } from "child_process";
 import { makeWASocket, useMultiFileAuthState, fetchLatestBaileysVersion, DisconnectReason } from "@whiskeysockets/baileys";
 import { Boom } from "@hapi/boom";
 
-import { xUi } from "./xUi.js;
+import { xUi } from "./xUi.js";
 
 // Configuration
 dotenv.config();
